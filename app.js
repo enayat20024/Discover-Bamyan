@@ -66,8 +66,10 @@ app.use("/api/v1/transport", authMiddleware, tranportRoutes);
 
 app.use("/api/v1/user", userRoutes);
 
-app.get("*", function(req, res) => {
-  res.sendFile(path.join(__dirname, "./bamyan-frontend/build/index.html"));
+app.get("*", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "./bamyan-frontend/build/index.html")
+  );
 });
 // Apply the authentication middleware
 
