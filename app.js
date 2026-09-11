@@ -66,7 +66,7 @@ app.use("/api/v1/transport", authMiddleware, tranportRoutes);
 
 app.use("/api/v1/user", userRoutes);
 
-app.get("*", (req, res) => {
+app.get("*", function (req, res){
   res.sendFile(
     path.join(__dirname, "./bamyan-frontend/build/index.html")
   );
