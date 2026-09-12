@@ -1,4 +1,4 @@
-const Tour = require("../Models/Tour");
+const Tour = require("../Models/tour");
 const User = require("../Models/user");
 
 exports.createGuide = async (req, res) => {
