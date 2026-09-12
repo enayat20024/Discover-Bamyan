@@ -30,7 +30,7 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "http://localhost:8080/api/v1/auth/auth/google/index",
+      callbackURL: `${process.env.APP_URL}/api/v1/auth/google/callback`,
     },
     function (accessToken, refreshToken, profile, cb) {
       User.findOrCreate(
@@ -53,7 +53,7 @@ passport.use(
     {
       clientID: process.env.APP_ID,
       clientSecret: process.env.APP_SECRET,
-      callbackURL: "http://localhost:8080/api/v1/auth/auth/facebook/index",
+      callbackURL: `${process.env.APP_URL}/api/v1/auth/facebook/callback`,
       profileFields: ["id", "displayName", "photos", "email"],
     },
     function (accessToken, refreshToken, profile, cb) {
