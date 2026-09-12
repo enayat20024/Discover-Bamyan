@@ -1,5 +1,5 @@
 const User = require("../Models/user");
-const Tour = require("../Models/Tour");
+const Tour = require("../Models/tour");
 const multer = require("multer");
 const path = require("path");
 
