@@ -1,6 +1,6 @@
 const multer = require("multer");
 const path = require("path");
-const Post = require("../Models/Post");
+const Post = require("../Models/post");
 const storage = multer.diskStorage({
   destination: "./public/uploads/", // Specify the directory for storing uploaded images
   filename: function (req, file, cb) {
