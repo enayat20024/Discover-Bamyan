@@ -1,13 +1,22 @@
 const mongoose = require("mongoose");
-const MONGO_URL = process.env.MONGO_URL;
 
 const connectDB = async () => {
   try {
-    const con = await mongoose.connect(MONGO_URL);
-    console.log(`MongoDB connected : ${con.connection.host}`);
-  } catch (err) {
-    console.log(err);
-    process.exit(1);
+    if (!process.env.MONGO_URL) {
+      throw new Error("MONGO_URL is not defined");
+    }
+
+    console.log("Connecting to MongoDB...");
+
+    const con = await mongoose.connect(process.env.MONGO_URL);
+
+    console.log(`MongoDB connected: ${con.connection.host}`);
+
+    return con;
+  } catch (error) {
+    console.error("MongoDB connection failed:");
+    console.error(error.message);
+    throw error;
   }
 };
 

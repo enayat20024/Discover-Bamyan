@@ -48,14 +48,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Make connection to MongoDB Atlas with mongoose
-connectDB();
 
 //Midlewares
 // Use the user middleware
 // app.use(authMiddleware);
 // app.use(userMiddleware);
 //routes
-
 
 app.use("/api/v1/post", postRoutes);
 app.use("/api/v1/recommend", recommendRoutes);
@@ -66,10 +64,8 @@ app.use("/api/v1/transport", authMiddleware, tranportRoutes);
 
 app.use("/api/v1/user", userRoutes);
 
-app.get("*", function (req, res){
-  res.sendFile(
-    path.join(__dirname, "./bamyan-frontend/build/index.html")
-  );
+app.get("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "./bamyan-frontend/build/index.html"));
 });
 // Apply the authentication middleware
 
@@ -77,8 +73,20 @@ app.get("*", function (req, res){
 
 const PORT = process.env.PORT || 8080;
 
-//listen
+const startServer = async () => {
+  try {
+    console.log("Starting server...");
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+    await connectDB();
+
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Server startup failed:");
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+startServer();
