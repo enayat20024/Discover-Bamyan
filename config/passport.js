@@ -64,8 +64,7 @@ passport.use(
           : null;
       User.findOrCreate(
         {
-          // facebookId: profile.id,
-          provider: "facebook",
+          facebookId: profile.id,
         },
         {
           username: username,
