@@ -25,22 +25,25 @@ router.get("/signin", (req, res) => res.render("signin"));
 
 // GOOGLE AUTH
 router.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  }),
 );
 
 router.get(
-  "/auth/google/index",
-  passport.authenticate("google", { failureRedirect: "/login" }),
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/login",
+  }),
   (req, res) => {
-    res.redirect("http://localhost:3000"); // React app
-  }
+    res.redirect("/");
+  },
 );
-
 // FACEBOOK AUTH
 router.get(
   "/auth/facebook",
-  passport.authenticate("facebook", { scope: ["email"] })
+  passport.authenticate("facebook", { scope: ["email"] }),
 );
 // router.get("/auth/facebook/index", facebookCallback, (req, res) => {
 //   res.redirect("/");
@@ -51,7 +54,7 @@ router.get(
   passport.authenticate("facebook", { failureRedirect: "/login" }),
   (req, res) => {
     res.redirect("http://localhost:3000");
-  }
+  },
 );
 
 // LOGOUT
