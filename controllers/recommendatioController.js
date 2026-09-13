@@ -13,8 +13,15 @@ const getByCategory = async (req, res) => {
     ]);
 
     let data = "";
+
+    let errorData = "";
+
     pythonProcess.stdout.on("data", (chunk) => {
       data += chunk.toString();
+    });
+    pythonProcess.stderr.on("data", (chunk) => {
+      errorData += chunk.toString();
+      console.error("Python error:", chunk.toString());
     });
     pythonProcess.on("close", (code) => {
       if (code !== 0) {
