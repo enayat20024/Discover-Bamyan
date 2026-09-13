@@ -42,6 +42,26 @@ router.get(
 );
 // FACEBOOK AUTH
 router.get(
+  "/facebook/callback",
+  (req, res, next) => {
+    console.log("========== FACEBOOK CALLBACK HIT ==========");
+    console.log("TIME:", new Date().toISOString());
+    console.log("CODE EXISTS:", !!req.query.code);
+    console.log("URL:", req.originalUrl);
+    console.log("============================================");
+
+    next();
+  },
+  passport.authenticate("facebook", {
+    failureRedirect: "/login",
+  }),
+  (req, res) => {
+    console.log("========== FACEBOOK LOGIN SUCCESS ==========");
+    res.redirect("/");
+  },
+);
+
+router.get(
   "/facebook",
   passport.authenticate("facebook", {
     scope: ["email"],
