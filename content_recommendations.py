@@ -7,7 +7,7 @@ import json
 
 def get_content_recommendations(attraction_name):
     # Load the attractions dataset into a Pandas DataFrame
-    attractions = pd.read_csv('Bamyan_attraction.csv')
+    attractions = pd.read_csv('bamyan_attraction.csv')
 
     # Concatenate 'name', 'description', and 'category' into a single text column
     attractions['combined_text'] = attractions['name'] + ' ' + attractions['description'] + ' ' + attractions['category']
