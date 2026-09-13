@@ -42,18 +42,20 @@ router.get(
 );
 // FACEBOOK AUTH
 router.get(
-  "/auth/facebook",
-  passport.authenticate("facebook", { scope: ["email"] }),
+  "/facebook",
+  passport.authenticate("facebook", {
+    scope: ["email"],
+  }),
 );
-// router.get("/auth/facebook/index", facebookCallback, (req, res) => {
-//   res.redirect("/");
-// });
 
+// FACEBOOK CALLBACK
 router.get(
-  "/auth/facebook/index",
-  passport.authenticate("facebook", { failureRedirect: "/login" }),
+  "/facebook/callback",
+  passport.authenticate("facebook", {
+    failureRedirect: "/login",
+  }),
   (req, res) => {
-    res.redirect("http://localhost:3000");
+    res.redirect("/");
   },
 );
 
