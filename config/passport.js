@@ -56,12 +56,15 @@ passport.use(
       callbackURL: `${process.env.APP_URL}/api/v1/auth/facebook/callback`,
       profileFields: ["id", "displayName", "photos", "email"],
     },
+
     function (accessToken, refreshToken, profile, cb) {
       const username = profile.displayName || profile.id;
+
       const userPic =
         profile.photos && profile.photos.length > 0
           ? profile.photos[0].value
           : null;
+
       User.findOrCreate(
         {
           facebookId: profile.id,
@@ -69,7 +72,8 @@ passport.use(
         {
           username: username,
           userPic: userPic,
-          userName: profile.displayName, // Store the displayName as userName
+          userName: profile.displayName,
+          provider: "facebook",
         },
         function (err, user) {
           return cb(err, user);

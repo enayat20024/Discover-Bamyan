@@ -43,18 +43,6 @@ router.get(
 // FACEBOOK AUTH
 router.get(
   "/facebook",
-  (req, res, next) => {
-    const requestId = Math.random().toString(36).substring(2, 8);
-
-    console.log("==========================================");
-    console.log("FACEBOOK LOGIN START");
-    console.log("REQUEST ID:", requestId);
-    console.log("TIME:", new Date().toISOString());
-    console.log("URL:", req.originalUrl);
-    console.log("==========================================");
-
-    next();
-  },
   passport.authenticate("facebook", {
     scope: ["email"],
   }),
@@ -63,31 +51,10 @@ router.get(
 // FACEBOOK CALLBACK
 router.get(
   "/facebook/callback",
-  (req, res, next) => {
-    const requestId = Math.random().toString(36).substring(2, 8);
-
-    req.facebookRequestId = requestId;
-
-    console.log("==========================================");
-    console.log("FACEBOOK CALLBACK HIT");
-    console.log("REQUEST ID:", requestId);
-    console.log("TIME:", new Date().toISOString());
-    console.log("CODE EXISTS:", !!req.query.code);
-    console.log("==========================================");
-
-    next();
-  },
-
   passport.authenticate("facebook", {
     failureRedirect: "/login",
   }),
-
   (req, res) => {
-    console.log("==========================================");
-    console.log("FACEBOOK LOGIN SUCCESS");
-    console.log("REQUEST ID:", req.facebookRequestId);
-    console.log("==========================================");
-
     res.redirect("/");
   },
 );
