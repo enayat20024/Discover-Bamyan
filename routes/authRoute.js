@@ -41,9 +41,20 @@ router.get(
   },
 );
 // FACEBOOK AUTH
-// FACEBOOK AUTH
 router.get(
   "/facebook",
+  (req, res, next) => {
+    const requestId = Math.random().toString(36).substring(2, 8);
+
+    console.log("==========================================");
+    console.log("FACEBOOK LOGIN START");
+    console.log("REQUEST ID:", requestId);
+    console.log("TIME:", new Date().toISOString());
+    console.log("URL:", req.originalUrl);
+    console.log("==========================================");
+
+    next();
+  },
   passport.authenticate("facebook", {
     scope: ["email"],
   }),
