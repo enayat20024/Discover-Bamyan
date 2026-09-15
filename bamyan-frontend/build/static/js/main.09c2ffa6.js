@@ -19283,7 +19283,7 @@
         (0, r.useEffect)(() => {
           (async () => {
             try {
-              const e = await fetch("http:///api/v1/booking/my-booking", {
+              const e = await fetch("/api/v1/booking/my-booking", {
                   credentials: "include",
                 }),
                 t = await e.json();
@@ -25251,55 +25251,53 @@
           }),
           (0, kt.jsx)("div", {
             className: "sport_routes",
-            children: vo
-              .slice(0, 3)
-              .map((e, t) =>
-                (0, kt.jsx)(
-                  "div",
-                  {
-                    className: "sport_route",
-                    children: (0, kt.jsxs)("div", {
-                      className: "sport_card",
-                      children: [
-                        (0, kt.jsx)("div", {
-                          className: "image",
-                          children: (0, kt.jsx)("a", {
-                            href: e.link,
-                            children: (0, kt.jsx)("img", {
-                              loading: "lazy",
-                              src: e.img,
-                              alt: e.title,
-                            }),
+            children: vo.slice(0, 3).map((e, t) =>
+              (0, kt.jsx)(
+                "div",
+                {
+                  className: "sport_route",
+                  children: (0, kt.jsxs)("div", {
+                    className: "sport_card",
+                    children: [
+                      (0, kt.jsx)("div", {
+                        className: "image",
+                        children: (0, kt.jsx)("a", {
+                          href: e.link,
+                          children: (0, kt.jsx)("img", {
+                            loading: "lazy",
+                            src: e.img,
+                            alt: e.title,
                           }),
                         }),
-                        (0, kt.jsxs)("div", {
-                          class: "card-body sport-body",
-                          children: [
-                            (0, kt.jsx)("h3", {
-                              children: (0, kt.jsx)("a", {
-                                href: e.link,
-                                children: e.title,
+                      }),
+                      (0, kt.jsxs)("div", {
+                        class: "card-body sport-body",
+                        children: [
+                          (0, kt.jsx)("h3", {
+                            children: (0, kt.jsx)("a", {
+                              href: e.link,
+                              children: e.title,
+                            }),
+                          }),
+                          (0, kt.jsxs)("p", {
+                            children: [
+                              (0, kt.jsx)("i", {
+                                class: "fa-solid fa-calendar",
+                                children: " ",
                               }),
-                            }),
-                            (0, kt.jsxs)("p", {
-                              children: [
-                                (0, kt.jsx)("i", {
-                                  class: "fa-solid fa-calendar",
-                                  children: " ",
-                                }),
-                                (0, kt.jsxs)("span", {
-                                  children: [" ", e.date],
-                                }),
-                              ],
-                            }),
-                          ],
-                        }),
-                      ],
-                    }),
-                  },
-                  e.id,
-                ),
+                              (0, kt.jsxs)("span", {
+                                children: [" ", e.date],
+                              }),
+                            ],
+                          }),
+                        ],
+                      }),
+                    ],
+                  }),
+                },
+                e.id,
               ),
+            ),
           }),
         ],
       }),
@@ -25584,19 +25582,17 @@
                     children:
                       null === n || void 0 === n
                         ? void 0
-                        : n
-                            .slice(1, 7)
-                            .map((e) =>
-                              (0, kt.jsx)(
-                                Co,
-                                {
-                                  time: e.datetime,
-                                  temp: e.temp,
-                                  iconString: e.conditions,
-                                },
-                                e.datetime,
-                              ),
+                        : n.slice(1, 7).map((e) =>
+                            (0, kt.jsx)(
+                              Co,
+                              {
+                                time: e.datetime,
+                                temp: e.temp,
+                                iconString: e.conditions,
+                              },
+                              e.datetime,
                             ),
+                          ),
                   }),
                 ],
               }),
@@ -28959,55 +28955,53 @@
             className: "sport_routes",
             children:
               "sports-event" === e
-                ? vo
-                    .slice(0, 2)
-                    .map((e, t) =>
-                      (0, kt.jsx)(
-                        "div",
-                        {
-                          className: "sport_route",
-                          children: (0, kt.jsxs)("div", {
-                            className: "event_card",
-                            children: [
-                              (0, kt.jsx)("div", {
-                                className: "image",
-                                children: (0, kt.jsx)("a", {
-                                  href: e.link,
-                                  children: (0, kt.jsx)("img", {
-                                    loading: "lazy",
-                                    src: e.img,
-                                    alt: e.title,
-                                  }),
+                ? vo.slice(0, 2).map((e, t) =>
+                    (0, kt.jsx)(
+                      "div",
+                      {
+                        className: "sport_route",
+                        children: (0, kt.jsxs)("div", {
+                          className: "event_card",
+                          children: [
+                            (0, kt.jsx)("div", {
+                              className: "image",
+                              children: (0, kt.jsx)("a", {
+                                href: e.link,
+                                children: (0, kt.jsx)("img", {
+                                  loading: "lazy",
+                                  src: e.img,
+                                  alt: e.title,
                                 }),
                               }),
-                              (0, kt.jsxs)("div", {
-                                class: "card-body sport-body",
-                                children: [
-                                  (0, kt.jsx)("h3", {
-                                    children: (0, kt.jsx)("a", {
-                                      href: e.link,
-                                      children: e.title,
+                            }),
+                            (0, kt.jsxs)("div", {
+                              class: "card-body sport-body",
+                              children: [
+                                (0, kt.jsx)("h3", {
+                                  children: (0, kt.jsx)("a", {
+                                    href: e.link,
+                                    children: e.title,
+                                  }),
+                                }),
+                                (0, kt.jsxs)("p", {
+                                  children: [
+                                    (0, kt.jsx)("i", {
+                                      class: "fa-solid fa-calendar",
+                                      children: " ",
                                     }),
-                                  }),
-                                  (0, kt.jsxs)("p", {
-                                    children: [
-                                      (0, kt.jsx)("i", {
-                                        class: "fa-solid fa-calendar",
-                                        children: " ",
-                                      }),
-                                      (0, kt.jsxs)("span", {
-                                        children: [" ", e.date],
-                                      }),
-                                    ],
-                                  }),
-                                ],
-                              }),
-                            ],
-                          }),
-                        },
-                        e.id,
-                      ),
-                    )
+                                    (0, kt.jsxs)("span", {
+                                      children: [" ", e.date],
+                                    }),
+                                  ],
+                                }),
+                              ],
+                            }),
+                          ],
+                        }),
+                      },
+                      e.id,
+                    ),
+                  )
                 : vo.map((e, t) =>
                     (0, kt.jsx)(
                       "div",
@@ -30553,40 +30547,38 @@
                           }),
                           (0, kt.jsx)("div", {
                             className: "admin__bookings",
-                            children: o
-                              .slice(0, 5)
-                              .map((e) =>
-                                (0, kt.jsxs)(
-                                  "div",
-                                  {
-                                    className: "admin__booking",
-                                    children: [
-                                      (0, kt.jsxs)("div", {
-                                        children: [
-                                          (0, kt.jsx)("strong", {
-                                            children: e.hotelName,
-                                          }),
-                                          (0, kt.jsx)("br", {}),
-                                          (0, kt.jsxs)("small", {
-                                            children: [
-                                              e.name,
-                                              " -",
-                                              " ",
-                                              new Date(e.checkIn)
-                                                .toISOString()
-                                                .split("T")[0],
-                                            ],
-                                          }),
-                                        ],
-                                      }),
-                                      (0, kt.jsxs)("strong", {
-                                        children: ["$", e.price],
-                                      }),
-                                    ],
-                                  },
-                                  e.id,
-                                ),
+                            children: o.slice(0, 5).map((e) =>
+                              (0, kt.jsxs)(
+                                "div",
+                                {
+                                  className: "admin__booking",
+                                  children: [
+                                    (0, kt.jsxs)("div", {
+                                      children: [
+                                        (0, kt.jsx)("strong", {
+                                          children: e.hotelName,
+                                        }),
+                                        (0, kt.jsx)("br", {}),
+                                        (0, kt.jsxs)("small", {
+                                          children: [
+                                            e.name,
+                                            " -",
+                                            " ",
+                                            new Date(e.checkIn)
+                                              .toISOString()
+                                              .split("T")[0],
+                                          ],
+                                        }),
+                                      ],
+                                    }),
+                                    (0, kt.jsxs)("strong", {
+                                      children: ["$", e.price],
+                                    }),
+                                  ],
+                                },
+                                e.id,
                               ),
+                            ),
                           }),
                         ],
                       }),
