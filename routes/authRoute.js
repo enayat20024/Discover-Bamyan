@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const passport = require("passport");
+const usedFacebookCodes = new Set();
 
 const {
   registerUser,
@@ -49,34 +50,58 @@ router.get("/facebook", (req, res, next) => {
   })(req, res, next);
 });
 
-// FACEBOOK CALLBACK
 router.get("/facebook/callback", (req, res, next) => {
+  const code = req.query.code;
+
   console.log("====================================");
   console.log("FACEBOOK CALLBACK HIT");
   console.log("TIME:", new Date().toISOString());
-  console.log("HAS CODE:", !!req.query.code);
+  console.log("HAS CODE:", !!code);
   console.log("====================================");
 
-  passport.authenticate("facebook", {
-    failureRedirect: "/login",
-  })(req, res, (err) => {
+  if (!code) {
+    return res.status(400).send("Facebook authorization code is missing.");
+  }
+
+  // Prevent the same Facebook authorization code
+  // from being processed more than once.
+  if (usedFacebookCodes.has(code)) {
+    console.log("DUPLICATE FACEBOOK CODE - IGNORING");
+    return res.redirect("/");
+  }
+
+  // Mark it immediately BEFORE Passport processes it.
+  usedFacebookCodes.add(code);
+
+  // Remove it after 60 seconds so the Set doesn't grow forever.
+  setTimeout(() => {
+    usedFacebookCodes.delete(code);
+  }, 60 * 1000);
+
+  passport.authenticate("facebook", (err, user, info) => {
     if (err) {
       console.error("FACEBOOK AUTH ERROR:", err);
       return next(err);
     }
 
-    console.log("FACEBOOK AUTH SUCCESS:", req.user?._id);
+    if (!user) {
+      console.error("FACEBOOK AUTH FAILED:", info);
+      return res.redirect("/login");
+    }
 
-    req.logIn(req.user, (loginErr) => {
+    console.log("FACEBOOK AUTH SUCCESS:", user._id);
+
+    req.logIn(user, (loginErr) => {
       if (loginErr) {
         console.error("SESSION LOGIN ERROR:", loginErr);
         return next(loginErr);
       }
 
       console.log("FACEBOOK SESSION CREATED");
-      res.redirect("/");
+
+      return res.redirect("/");
     });
-  });
+  })(req, res, next);
 });
 
 // LOGOUT
