@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, "./bamyan-frontend/build")));
 // Enable CORS for all routes
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://discover-bamyan.onrender.com",
     credentials: true,
   }),
 );
@@ -37,9 +37,14 @@ app.use(express.json());
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET, // Secret used to sign the session ID cookie
-    resave: false, // Do not save sessions if they have not been modified
-    saveUninitialized: false, // Do not save uninitialized sessions
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: true,
+      httpOnly: true,
+      sameSite: "lax",
+    },
   }),
 );
 
@@ -55,9 +60,8 @@ app.use(passport.session());
 // app.use(userMiddleware);
 //routes
 
-app.use("/api/v1/post", postRoutes);
 app.use("/api/v1/recommend", recommendRoutes);
-app.use("/api/v1/auth", authMiddleware, authRoutes);
+app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/post", authMiddleware, postRoutes);
 app.use("/api/v1/booking", authMiddleware, bookingRoutes);
 app.use("/api/v1/transport", authMiddleware, tranportRoutes);
