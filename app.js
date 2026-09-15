@@ -37,14 +37,9 @@ app.use(express.json());
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: true,
-      httpOnly: true,
-      sameSite: "lax",
-    },
+    secret: process.env.SESSION_SECRET, // Secret used to sign the session ID cookie
+    resave: false, // Do not save sessions if they have not been modified
+    saveUninitialized: false, // Do not save uninitialized sessions
   }),
 );
 

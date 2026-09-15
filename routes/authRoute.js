@@ -42,74 +42,22 @@ router.get(
   },
 );
 // FACEBOOK LOGIN
-router.get("/facebook", (req, res, next) => {
-  console.log("FACEBOOK LOGIN START:", Date.now());
 
+router.get(
+  "/facebook",
+  passport.authenticate("facebook", { scope: ["profile", "email"] }),
+);
+
+// FACEBOOK CALLBACK
+router.get(
+  "/facebook/callback",
   passport.authenticate("facebook", {
-    scope: ["email"],
-  })(req, res, next);
-});
-
-router.get("/facebook/callback", (req, res, next) => {
-  const code = req.query.code;
-
-  console.log("====================================");
-  console.log("FACEBOOK CALLBACK HIT");
-  console.log("TIME:", new Date().toISOString());
-  console.log("HAS CODE:", !!code);
-  console.log("====================================");
-
-  if (!code) {
-    return res.status(400).send("Facebook authorization code is missing.");
-  }
-
-  if (usedFacebookCodes.has(code)) {
-    console.log("DUPLICATE FACEBOOK CODE - IGNORING");
-    return res.redirect("/");
-  }
-
-  usedFacebookCodes.add(code);
-
-  setTimeout(() => {
-    usedFacebookCodes.delete(code);
-  }, 60 * 1000);
-
-  passport.authenticate("facebook", (err, user, info) => {
-    if (err) {
-      console.error("FACEBOOK AUTH ERROR:", err);
-      return next(err);
-    }
-
-    if (!user) {
-      console.error("FACEBOOK AUTH FAILED:", info);
-      return res.redirect("/login");
-    }
-
-    console.log("FACEBOOK AUTH SUCCESS:", user._id);
-
-    req.logIn(user, (loginErr) => {
-      if (loginErr) {
-        console.error("SESSION LOGIN ERROR:", loginErr);
-        return next(loginErr);
-      }
-
-      console.log("FACEBOOK SESSION CREATED");
-
-      // IMPORTANT:
-      // Save the session before redirecting.
-      req.session.save((sessionErr) => {
-        if (sessionErr) {
-          console.error("SESSION SAVE ERROR:", sessionErr);
-          return next(sessionErr);
-        }
-
-        console.log("FACEBOOK SESSION SAVED");
-
-        return res.redirect("/");
-      });
-    });
-  })(req, res, next);
-});
+    failureRedirect: "/login",
+  }),
+  (req, res) => {
+    res.redirect("/");
+  },
+);
 
 // LOGOUT
 
