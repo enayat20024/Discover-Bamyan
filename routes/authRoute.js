@@ -41,21 +41,22 @@ router.get(
   },
 );
 // FACEBOOK AUTH
-router.get(
-  "/facebook",
+router.get("/facebook", (req, res, next) => {
+  console.log("FACEBOOK LOGIN START");
+
   passport.authenticate("facebook", {
     scope: ["email"],
-  }),
-);
+  })(req, res, next);
+});
 
 router.get("/facebook/callback", (req, res, next) => {
-  console.log("FACEBOOK CALLBACK:", new Date().toISOString());
+  console.log("FACEBOOK CALLBACK");
   console.log("CODE RECEIVED:", !!req.query.code);
 
   passport.authenticate("facebook", (err, user, info) => {
     if (err) {
       console.error("FACEBOOK AUTH ERROR:", err);
-      return res.redirect("/login");
+      return next(err);
     }
 
     if (!user) {
@@ -68,6 +69,8 @@ router.get("/facebook/callback", (req, res, next) => {
         console.error("SESSION LOGIN ERROR:", err);
         return next(err);
       }
+
+      console.log("FACEBOOK LOGIN SUCCESS:", user._id);
 
       return res.redirect("/");
     });
