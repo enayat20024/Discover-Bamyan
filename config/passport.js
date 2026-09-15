@@ -55,6 +55,7 @@ passport.use(
       clientSecret: process.env.APP_SECRET,
       callbackURL: `${process.env.APP_URL}/api/v1/auth/facebook/callback`,
       profileFields: ["id", "displayName", "photos", "email"],
+      enableProof: true,
     },
 
     function (accessToken, refreshToken, profile, cb) {
