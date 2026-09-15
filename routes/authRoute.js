@@ -40,42 +40,26 @@ router.get(
     res.redirect("/");
   },
 );
-// FACEBOOK AUTH
+// FACEBOOK LOGIN
 router.get("/facebook", (req, res, next) => {
-  console.log("FACEBOOK LOGIN START");
+  console.log("FACEBOOK LOGIN START:", Date.now());
 
   passport.authenticate("facebook", {
     scope: ["email"],
   })(req, res, next);
 });
 
-router.get("/facebook/callback", (req, res, next) => {
-  console.log("FACEBOOK CALLBACK");
-  console.log("CODE RECEIVED:", !!req.query.code);
-
-  passport.authenticate("facebook", (err, user, info) => {
-    if (err) {
-      console.error("FACEBOOK AUTH ERROR:", err);
-      return next(err);
-    }
-
-    if (!user) {
-      console.error("FACEBOOK NO USER:", info);
-      return res.redirect("/login");
-    }
-
-    req.logIn(user, (err) => {
-      if (err) {
-        console.error("SESSION LOGIN ERROR:", err);
-        return next(err);
-      }
-
-      console.log("FACEBOOK LOGIN SUCCESS:", user._id);
-
-      return res.redirect("/");
-    });
-  })(req, res, next);
-});
+// FACEBOOK CALLBACK
+router.get(
+  "/facebook/callback",
+  passport.authenticate("facebook", {
+    failureRedirect: "/login",
+  }),
+  (req, res) => {
+    console.log("FACEBOOK LOGIN SUCCESS:", req.user._id);
+    res.redirect("/");
+  },
+);
 
 // LOGOUT
 
