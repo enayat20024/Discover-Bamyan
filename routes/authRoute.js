@@ -63,17 +63,13 @@ router.get("/facebook/callback", (req, res, next) => {
     return res.status(400).send("Facebook authorization code is missing.");
   }
 
-  // Prevent the same Facebook authorization code
-  // from being processed more than once.
   if (usedFacebookCodes.has(code)) {
     console.log("DUPLICATE FACEBOOK CODE - IGNORING");
     return res.redirect("/");
   }
 
-  // Mark it immediately BEFORE Passport processes it.
   usedFacebookCodes.add(code);
 
-  // Remove it after 60 seconds so the Set doesn't grow forever.
   setTimeout(() => {
     usedFacebookCodes.delete(code);
   }, 60 * 1000);
@@ -99,7 +95,18 @@ router.get("/facebook/callback", (req, res, next) => {
 
       console.log("FACEBOOK SESSION CREATED");
 
-      return res.redirect("/");
+      // IMPORTANT:
+      // Save the session before redirecting.
+      req.session.save((sessionErr) => {
+        if (sessionErr) {
+          console.error("SESSION SAVE ERROR:", sessionErr);
+          return next(sessionErr);
+        }
+
+        console.log("FACEBOOK SESSION SAVED");
+
+        return res.redirect("/");
+      });
     });
   })(req, res, next);
 });
