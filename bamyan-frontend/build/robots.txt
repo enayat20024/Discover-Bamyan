@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://discover-bamyan.onrender.com/sitemap.xml
